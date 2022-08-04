@@ -1,0 +1,14 @@
+Features:
+- export button (for saving progress) (need to be able to serialize/de-serialize files)
+- export button (to turn the design into a yml or json template file)
+- arrows (basically comments that wont effect the template but are for visual reference)
+- grid system (for placing the components)
+- scrollable grids (to move around larger designs)
+- Zoom in and out
+- Desktop like mouse selection (drag a box to select many elements)
+
+Menu:
+- object picker
+- arrow tool (mode)
+- show properties of selected?
+- rectangle select tool

@@ -1,0 +1,5 @@
+- Like that UML design web app
+- top bar, side bar on left (maybe), then main design area
+- Toggle grid visibility
+- Grid lines fade in
+- Full screen web app 

@@ -1,0 +1,5 @@
+- Typescript
+- HTML
+- CSS
+- aws hosting
+- nginx?

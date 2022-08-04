@@ -1,0 +1,125 @@
+@font-face {
+  font-family: "ember";
+  src: url("fonts/Ember/AmazonEmber_Rg.ttf");
+}
+
+html, body {
+	padding: 0;
+	margin: 0;
+	height: 100%;
+  box-sizing: border-box;
+  font-family: ember;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+#top {
+  position: fixed;
+
+}
+
+#side {
+  position: fixed;
+  width: 250px;
+  height: 100%;
+  background-color: white;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  overflow-y: scroll;
+
+  /* remove user selection (all browsers) */
+	user-select: none;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+}
+
+#side ul {
+  list-style-type: none;
+  padding: 0;
+  display: block;
+}
+
+#side ul li {
+  margin-bottom: 20px;
+  width: 100%;
+  display: block;
+}
+
+#side ul li img {
+  width: 160px;
+  margin: auto;
+  display: block;
+  pointer-events: none;
+}
+
+#side ul li figcaption {
+  text-align: center;
+  overflow: hidden;
+}
+
+#side::-webkit-scrollbar {
+  width: 8px;
+}
+
+#side::-webkit-scrollbar-track {
+  /* background: rgba(0, 0, 0, 0); */
+}
+
+#side::-webkit-scrollbar-thumb {
+  background-color: rgb(210, 210, 210);    /* color of the scroll thumb */
+  border-radius: 20px;       /* roundness of the scroll thumb */
+}
+
+#grid {
+	display: grid;
+	/* background-color: black; */
+
+	width: 100%;
+	height: 100%;
+
+	overflow: hidden;
+
+	/* remove user selection (all browsers) */
+	user-select: none;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+}
+
+#search {
+  display: block;
+  width: 95%;
+  background-color: rgb(245, 245, 245);
+  border-radius: 15px;
+  padding: 8px;
+  margin: auto;
+  border: 1px solid rgba(230, 230, 230, 0);
+}
+
+#search:focus {
+  border: 1px solid rgb(230, 230, 230);
+  outline: none !important;
+}
+
+.cell {
+	border: 1px solid rgb(240, 240, 240);
+	background-color: white;
+}
+
+.icon {
+	position: relative;
+}
+
+.context-menu {
+	position: fixed;
+}
+
+.resource {
+
+}
