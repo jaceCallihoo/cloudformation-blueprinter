@@ -3,24 +3,22 @@ const cellSize = 30
 const iconSize = 5
 const numRows = 40
 const numCols = 80
-const menuWidth = 100
+const menuWidth = 250
 
 // globals
-var dragged             // id number of the currently dragged
-var resourceList = []
+var dragged
 var nextRef = 0
 var template = {
-  'Version': 'none',
-  'Description': '',
-  'Metadata': null,
-  'Parameters': null,
-  'Rules': null,
-  'Mappings': null,
-  'Conditions': null,
-  'Transform': null,
-  'Resources': [],
-  'Outputs': null,
-  'Generated': ''
+  Version: 'none',
+  Description: '',
+  Metadata: null,
+  Parameters: null,
+  Rules: null,
+  Mappings: null,
+  Conditions: null,
+  Transform: null,
+  Resources: [],
+  Outputs: null,
 }
 
 // initialization
@@ -51,7 +49,7 @@ window.addEventListener('load', () => {
     resource.classList.add('resource')
     resource.setAttribute('data-resource-type', resourceDictionary[i].Type)
     resource.setAttribute('draggable', true)
-    resource.addEventListener('dragstart', (e) => dragStart(e))
+    resource.addEventListener('dragstart', (e) => sideDrag(e))
 
     // image
     let resourceIcon = document.createElement('img')
@@ -84,66 +82,95 @@ function getTypeIcon (type) {
   return `images/${type.replace('::', '-').replace('::', '-')}.svg`
 }
 
+function setDragImage (e, type) {
+  var dragImage = document.createElement('img')
+  dragImage.src = getTypeIcon(dragged.Type)
+  e.dataTransfer.setDragImage(dragImage, dragImage.height / 2, dragImage.width / 2)
+}
+
+function move (from, to) {
+  // move all children
+  while (from.childNodes.length > 0) {
+    to.appendChild(from.childNodes[0])
+  }
+  // move element
+  to.appendChild(from)
+}
+
 // event listeners
 
-function dragStart (e) {
-  dragged = e.target.getAttribute('data-resource-type')
+function sideDrag (e) {
+  // set dragged
+  dragged = {
+    Action: 'create',
+    Type: e.target.getAttribute('data-resource-type')
+  }
 
   // set drag image
-  var dragImage = document.createElement('img')
-  dragImage.src = getTypeIcon(dragged)
-  e.dataTransfer.setDragImage(dragImage, dragImage.height / 2, dragImage.width / 2)
+  setDragImage(e, dragged.Type)
 }
 
 function drop (e) {
-  let icon = document.createElement('img')
-  icon.classList.add('icon')
-  icon.src = getTypeIcon(dragged)
-  icon.width = cellSize * iconSize
-  icon.height = cellSize * iconSize
-  icon.style.right = `${cellSize * Math.floor(iconSize / 2)}px`
-  icon.style.bottom = `${cellSize * Math.floor(iconSize / 2)}px`
-  icon.setAttribute('data-reference', nextRef)
+  // check for valid target
+  if (dragged.Action === 'create') {
+    // create icon
+    let icon = document.createElement('img')
+    icon.classList.add('icon')
+    icon.src = getTypeIcon(dragged.Type)
+    icon.width = cellSize * iconSize
+    icon.height = cellSize * iconSize
+    icon.style.right = `${cellSize * Math.floor(iconSize / 2)}px`
+    icon.style.bottom = `${cellSize * Math.floor(iconSize / 2)}px`
+    icon.setAttribute('data-resource-type', dragged.Type)
+    icon.setAttribute('data-reference', nextRef)
 
-  // set context menu for icon
-  icon.addEventListener('contextmenu', (e) => { addContextMenu(e) })
+    // set context menu for icon
+    icon.addEventListener('contextmenu', (e) => addContextMenu(e))
 
-  // make icon movable
-  icon.addEventListener('dragstart', (e) => moveStart(e))
+    // make icon movable
+    icon.addEventListener('dragstart', (e) => moveDrag(e))
 
-  // add to template resources
-  template.Resources.push({ref: nextRef, type: dragged, properties: []})
+    // add to template resources
+    template.Resources.push({Ref: nextRef, Name: 'defaultResourceName', Type: dragged.Type, Properties: []})
 
-  e.target.appendChild(icon)
-  dragged = ''
-  nextRef++
+    e.target.appendChild(icon)
+    nextRef++
+  } else if (dragged.Action === 'move') {
+    move(dragged.From, e.target)
+  }
 }
 
-function moveStart (e) {
-  dragged = e.target
+function moveDrag (e) {
+  dragged = {
+    Action: 'move',
+    From: e.target,
+    Type: e.target.getAttribute('data-resource-type')
+  }
   // e.dataTransfer.effectAllowed = 'move' // not needed
 
   // set drag image
-  var dragImage = document.createElement('img')
-  dragImage.src = getTypeIcon(dragged)
-  e.dataTransfer.setDragImage(dragImage, dragImage.height / 2, dragImage.width / 2)
+  setDragImage(e, dragged.Type)
 
   // hide image being dragged
-  dragged.style.display = 'none'
-}
-
-function moveEnd (e) {
-  //
-
-  // remove old tile from html
+  // dragged.From.style.display = 'none'
 }
 
 function addContextMenu (e) {
   e.preventDefault()
+  console.log('context')
   let menu = document.createElement('div')
   menu.classList.add('context-menu')
-  menu.width = `${menuWidth}px`
-}
+  menu.style.width = `${menuWidth}px`
+  menu.style.height = '100px'
 
-// ////
-if (resourceList[0]) {}
+  let list = document.createElement('ul')
+  let item = document.createElement('li')
+  item.innerHTML = 'hello'
+
+  menu.style.left = e.clientX + 'px'
+  menu.style.top = e.clientY + 'px'
+
+  list.appendChild(item)
+  menu.appendChild(list)
+  document.body.appendChild(menu)
+}

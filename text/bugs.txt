@@ -1,0 +1,5 @@
+- can't drop tiles in borders as they are not a part of the div
+  - fix: remove border and make a background image
+
+- dropping tile where it came from causes exception
+  -fix: make tiles a draggable div instead
