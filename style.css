@@ -104,7 +104,7 @@ html, body {
 
 #search:focus {
   border: 1px solid rgb(230, 230, 230);
-  outline: none !important;
+  outline: none;
 }
 
 .cell {
@@ -125,7 +125,7 @@ html, body {
 }
 
 #context-menu {
-  /* display: none; */
+  display: none;
   position: fixed;
   z-index: 10;
   background-color: green;
@@ -133,6 +133,20 @@ html, body {
   border-radius: 5px;
 }
 
-.invisible {
-  /* display: none !important; */
+#context-menu ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 5px;
+}
+
+#context-menu ul li {
+
+}
+
+#context-menu ul li input {
+  background-color: inherit;
+}
+
+#context-menu ul li input:focus {
+  background-color: inherit;
 }

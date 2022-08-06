@@ -172,5 +172,12 @@ function addContextMenu (e) {
 
   did.CtxMenu.style.left = e.clientX + 'px'
   did.CtxMenu.style.top = e.clientY + 'px'
-  did.CtxMenu.classList.remove('invisible')
+  did.CtxMenu.style.display = 'block'
 }
+
+// hide context menu on click away
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('#context-menu')) {
+    did.CtxMenu.style.display = 'none'
+  }
+})
