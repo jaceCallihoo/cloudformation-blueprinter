@@ -6,6 +6,11 @@ const numCols = 80
 const menuWidth = 250
 
 // globals
+var did = {
+  Grid: null,
+  Results: null,
+  CtxMenu: null
+}
 var dragged
 var nextRef = 0
 var template = {
@@ -18,18 +23,19 @@ var template = {
   Conditions: null,
   Transform: null,
   Resources: [],
-  Outputs: null,
+  Outputs: null
 }
 
 // initialization
 window.addEventListener('load', () => {
   // constant document objects
-  const grid = document.getElementById('grid')
-  const results = document.getElementById('search-results')
+  did.Grid = document.getElementById('grid')
+  did.Results = document.getElementById('search-results')
+  did.CtxMenu = document.getElementById('context-menu')
 
   // set grid size
-  grid.style.gridTemplateColumns = gridTemplateString(numCols, cellSize)
-  grid.style.gridTemplateRows = gridTemplateString(numRows, cellSize)
+  did.Grid.style.gridTemplateColumns = gridTemplateString(numCols, cellSize)
+  did.Grid.style.gridTemplateRows = gridTemplateString(numRows, cellSize)
 
   // generate grid cells
   for (let i = 0; i < numRows * numCols; i++) {
@@ -39,7 +45,7 @@ window.addEventListener('load', () => {
     cell.style.height = `${cellSize}px`
     cell.addEventListener('drop', (e) => { drop(e) })
     cell.addEventListener('dragover', (e) => e.preventDefault())
-    grid.appendChild(cell)
+    did.Grid.appendChild(cell)
   }
 
   // generate resource list items
@@ -63,7 +69,7 @@ window.addEventListener('load', () => {
     resourceCaption.innerHTML = resourceDictionary[i].Type.split('::')[2]
     resource.appendChild(resourceCaption)
 
-    results.appendChild(resource)
+    did.Results.appendChild(resource)
   }
 })
 
@@ -157,20 +163,14 @@ function moveDrag (e) {
 
 function addContextMenu (e) {
   e.preventDefault()
-  console.log('context')
-  let menu = document.createElement('div')
-  menu.classList.add('context-menu')
-  menu.style.width = `${menuWidth}px`
-  menu.style.height = '100px'
+  console.log(did.CtxMenu)
+  did.CtxMenu.style.width = `${menuWidth}px` // temp
+  did.CtxMenu.style.height = '100px'         // temp
 
-  let list = document.createElement('ul')
   let item = document.createElement('li')
   item.innerHTML = 'hello'
 
-  menu.style.left = e.clientX + 'px'
-  menu.style.top = e.clientY + 'px'
-
-  list.appendChild(item)
-  menu.appendChild(list)
-  document.body.appendChild(menu)
+  did.CtxMenu.style.left = e.clientX + 'px'
+  did.CtxMenu.style.top = e.clientY + 'px'
+  did.CtxMenu.classList.remove('invisible')
 }
