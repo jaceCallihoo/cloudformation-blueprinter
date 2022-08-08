@@ -83,7 +83,7 @@ html, body {
 
 	overflow: hidden;
 
-  background-image: url('test-back-5.webp');
+  background-image: url('images/back.svg');
 
 	/* remove user selection (all browsers) */
 	user-select: none;

@@ -4,7 +4,7 @@ const iconSize = 5
 const numRows = 40
 const numCols = 80
 const menuWidth = 250
-const backgroundRepeat = 6
+const backgroundRepeat = 3
 
 // globals
 var did = {
@@ -78,6 +78,7 @@ window.addEventListener('load', () => {
 })
 
 window.addEventListener('drop', (e) => e.preventDefault())
+window.addEventListener('contextmenu', (e) => e.preventDefault())
 
 // helpers
 
@@ -168,7 +169,6 @@ function moveDrag (e) {
 }
 
 function addContextMenu (e) {
-  e.preventDefault()
   console.log(did.CtxMenu)
   did.CtxMenu.style.width = `${menuWidth}px` // temp
   did.CtxMenu.style.height = '100px'         // temp
