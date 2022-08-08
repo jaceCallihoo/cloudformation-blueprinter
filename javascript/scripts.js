@@ -75,6 +75,8 @@ window.addEventListener('load', () => {
   }
 })
 
+window.addEventListener('drop', (e) => e.preventDefault())
+
 // helpers
 
 // get number of rows/columns for the grid template attribute
