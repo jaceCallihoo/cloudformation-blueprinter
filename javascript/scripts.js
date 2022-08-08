@@ -4,6 +4,7 @@ const iconSize = 5
 const numRows = 40
 const numCols = 80
 const menuWidth = 250
+const backgroundRepeat = 6
 
 // globals
 var did = {
@@ -38,6 +39,7 @@ window.addEventListener('load', () => {
   // set grid size
   did.Grid.style.gridTemplateColumns = gridTemplateString(numCols, cellSize)
   did.Grid.style.gridTemplateRows = gridTemplateString(numRows, cellSize)
+  did.Grid.style.backgroundSize = `${cellSize * backgroundRepeat}px`
 
   // generate grid cells
   for (let i = 0; i < numRows * numCols; i++) {
