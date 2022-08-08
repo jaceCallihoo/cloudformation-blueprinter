@@ -121,7 +121,11 @@ html, body {
 }
 
 .resource {
+  cursor: grab;
+}
 
+.resource:active {
+  cursor: grabbing;
 }
 
 #context-menu {
@@ -145,6 +149,7 @@ html, body {
 
 #context-menu ul li input {
   background-color: inherit;
+  border: none;
 }
 
 #context-menu ul li input:focus {

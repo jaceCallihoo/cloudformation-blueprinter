@@ -9,7 +9,8 @@ const menuWidth = 250
 var did = {
   Grid: null,
   Results: null,
-  CtxMenu: null
+  CtxMenu: null,
+  CtxName: null
 }
 var dragged
 var nextRef = 0
@@ -32,6 +33,7 @@ window.addEventListener('load', () => {
   did.Grid = document.getElementById('grid')
   did.Results = document.getElementById('search-results')
   did.CtxMenu = document.getElementById('context-menu')
+  did.CtxName = document.getElementById('context-name')
 
   // set grid size
   did.Grid.style.gridTemplateColumns = gridTemplateString(numCols, cellSize)
@@ -166,6 +168,7 @@ function addContextMenu (e) {
   console.log(did.CtxMenu)
   did.CtxMenu.style.width = `${menuWidth}px` // temp
   did.CtxMenu.style.height = '100px'         // temp
+  did.CtxName.placeholder = 'Un-namedResource'
 
   let item = document.createElement('li')
   item.innerHTML = 'hello'
