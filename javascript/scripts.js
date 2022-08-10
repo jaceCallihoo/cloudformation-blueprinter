@@ -47,10 +47,14 @@ window.addEventListener('load', () => {
     cell.classList.add('cell')
     cell.style.width = `${cellSize}px`
     cell.style.height = `${cellSize}px`
-    cell.addEventListener('drop', (e) => { drop(e) })
+    cell.addEventListener('drop', (e) => drop(e))
     cell.addEventListener('dragover', (e) => e.preventDefault())
     did.Grid.appendChild(cell)
   }
+
+  // make grid draggable
+  // did.Grid.setAttribute('draggable', true)
+  // did.Grid.addEventListener('drag', (e) => moveGrid(e))
 
   // generate resource list items
   for (let i = 0; i < resourceDictionary.length; i++) {
@@ -188,3 +192,9 @@ document.addEventListener('click', (e) => {
     did.CtxMenu.style.display = 'none'
   }
 })
+
+function moveGrid (e) {
+  e.preventDefault()
+  var startX = did.Grid.style.top
+  console.log(startX)
+}
