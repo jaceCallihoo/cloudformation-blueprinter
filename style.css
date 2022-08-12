@@ -149,10 +149,12 @@ html, body {
 }
 
 #context-menu ul li {
+  cursor: pointer;
 
 }
 
 #context-menu ul li input {
+  cursor: pointer;
   background-color: inherit;
   border: none;
 }
@@ -162,9 +164,9 @@ html, body {
 }
 
 .context-icon {
-  width: 10px;
-  height: 10px;
-  display: block;
+  width: 15px;
+  height: 15px;
+  display: inline-block;
 }
 
 #icon-delete {
