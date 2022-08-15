@@ -137,7 +137,7 @@ html, body {
   display: none;
   position: fixed;
   z-index: 10;
-  /* background-color: green; */
+  background-color: white;
 
   border-radius: 5px;
 }
@@ -167,6 +167,14 @@ html, body {
   width: 15px;
   height: 15px;
   display: inline-block;
+}
+
+#icon-add {
+  background-image: url('images/plus.svg');
+}
+
+#icon-view {
+  background-image: url('images/view.svg');
 }
 
 #icon-delete {

@@ -176,7 +176,7 @@ function addContextMenu (e) {
   console.log(did.CtxMenu)
   did.CtxMenu.style.width = `${menuWidth}px` // temp
   did.CtxMenu.style.height = '100px'         // temp
-  did.CtxName.placeholder = 'Un-namedResource'
+  did.CtxName.placeholder = 'Un-named Resource'
 
   let item = document.createElement('li')
   item.innerHTML = 'hello'
