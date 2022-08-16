@@ -1,63 +1,67 @@
-var gen = {}
+var g = {}  // generated json object
 
 function generate () {
 
   // version
   if (template.Version !== '') {
-    gen.AWSTemplateFormatVersion = template.Version
+    g.AWSTemplateFormatVersion = template.Version
   }
 
   // Description
   if (template.Description !== '') {
-    gen.Description = template.Description
+    g.Description = template.Description
   }
 
   // Metadata
   if (template.Metadata) {
-    gen.Metadata = {}
+    g.Metadata = {}
   }
 
   // Parameters
   if (template.Parameters) {
-    gen.Parameters = {}
+    g.Parameters = {}
   }
 
   // Rules
   if (template.Rules) {
-    gen.Rules = {}
+    g.Rules = {}
   }
 
   // Mappings
   if (template.Mappings) {
-    gen.Mappings = {}
+    g.Mappings = {}
   }
 
   // Conditions
   if (template.Conditions) {
-    gen.Conditions = {}
+    g.Conditions = {}
   }
 
   // Transform
   if (template.Transform) {
-    gen.Transform = {}
+    g.Transform = {}
   }
 
   // Resources
-  gen.Resources = {}
-  console.log(template.Resources.length)
-  for (let i = 0; i < template.Resources.length; i++) {
-    gen.Resources[`${template.Resources[i].Name}`] = {}
-    // template.Generated += idt(2) + `Type: "${template.Resources[i].Type}",\n`
-    // for (let j = 0; j < template.Resources[i].Properties.length; i++) {
-    //
-    // }
-  }
+  g.Resources = {}
+  template.Resources.forEach((resource) => {
+    g.Resources[resource.Name] = {}
+    g.Resources[resource.Name].Type = resource.Type
+
+    if (resource.Properties.length > 0) {
+      g.Resources[resource.Name].Properties = {}
+      resource.Properties.forEach((property) => {
+        g.Resources[resource.Name].Properties[property.Name] = property.Value 
+      })
+    }
+  })
+
 
   // Outputs
   if (template.Outputs) {
-    gen.Outputs = {}
+    g.Outputs = {}
   }
 
   // console.log(template.Generated)
-  console.log(JSON.stringify(gen, null, 2))
+  console.log(JSON.stringify(g, null, 2))
 }
