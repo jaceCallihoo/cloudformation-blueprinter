@@ -11,7 +11,10 @@ var did = {
   Grid: null,
   Results: null,
   CtxMenu: null,
-  CtxName: null
+  CtxName: null,
+  CtxView: null,
+  CtxAdd: null,
+  CtxDel: null
 }
 var dragged
 var contexted
@@ -29,6 +32,9 @@ var template = {
   Outputs: null
 }
 
+template.Version = "2010-09-09"
+template.Description = "This is my special template"
+
 // initialization
 window.addEventListener('load', () => {
   // constant document objects
@@ -36,6 +42,9 @@ window.addEventListener('load', () => {
   did.Results = document.getElementById('search-results')
   did.CtxMenu = document.getElementById('context-menu')
   did.CtxName = document.getElementById('context-name')
+  did.CtxView = document.getElementById('context-view')
+  did.CtxAdd = document.getElementById('context-add')
+  did.CtxDel = document.getElementById('context-delete')
 
   // set grid size
   did.Grid.style.gridTemplateColumns = gridTemplateString(numCols, cellSize)
@@ -84,6 +93,9 @@ window.addEventListener('load', () => {
   // init contetx menu
   did.CtxMenu.addEventListener('input', (e) => updateResourceName(e))
   did.CtxName.addEventListener('focus', (e) => e.target.select())
+  did.CtxView.addEventListener('click', (e) => {})
+  did.CtxAdd.addEventListener('click', (e) => {})
+  did.CtxDel.addEventListener('click', (e) => {})
 })
 
 window.addEventListener('drop', (e) => e.preventDefault())
@@ -168,13 +180,9 @@ function moveDrag (e) {
     From: e.target,
     Type: e.target.getAttribute('data-resource-type')
   }
-  // e.dataTransfer.effectAllowed = 'move' // not needed
 
   // set drag image
   setDragImage(e, dragged.Type)
-
-  // hide image being dragged
-  // dragged.From.style.display = 'none'
 }
 
 function showContextMenu (e) {
