@@ -2,6 +2,31 @@ var dragged
 
 window.addEventListener('drop', (e) => e.preventDefault())
 
+function initTile() {
+  // generate resource list items
+  for (let i = 0; i < resourceDictionary.length; i++) {
+    // list item
+    let resource = document.createElement('li')
+    resource.classList.add('resource')
+    resource.setAttribute('data-resource-type', resourceDictionary[i].Type)
+    resource.setAttribute('draggable', true)
+    resource.addEventListener('dragstart', (e) => sideDrag(e))
+
+    // image
+    let resourceIcon = document.createElement('img')
+    resourceIcon.src = getTypeIcon(resourceDictionary[i].Type)
+    resourceIcon.alt = resourceDictionary[i].Type
+    resourceIcon.setAttribute('data-resource-type', resourceDictionary[i].Type)
+    resource.appendChild(resourceIcon)
+
+    // image caption
+    let resourceCaption = document.createElement('figcaption')
+    resourceCaption.innerHTML = resourceDictionary[i].Type.split('::')[2]
+    resource.appendChild(resourceCaption)
+
+    did.Results.appendChild(resource)
+  }
+}
 
 function sideDrag (e) {
   // set dragged

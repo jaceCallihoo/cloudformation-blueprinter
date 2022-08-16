@@ -5,6 +5,7 @@ window.addEventListener('contextmenu', (e) => e.preventDefault())
 function initContext() {
   did.CtxMenu.addEventListener('input', (e) => updateResourceName(e))
   did.CtxName.addEventListener('focus', (e) => e.target.select())
+  did.CtxName.addEventListener('keypress', (e) => contextNameKeypress(e))
   did.CtxView.addEventListener('click', (e) => {})
   did.CtxAdd.addEventListener('click', (e) => {})
   did.CtxDel.addEventListener('click', (e) => deleteTile())
@@ -40,6 +41,12 @@ function updateResourceName (e) {
       o.Name = did.CtxName.value
     }
   })
+}
+
+function contextNameKeypress(e) {
+  if (e.key === 'Enter') {
+    did.CtxName.blur()
+  }
 }
 
 function getName (ref) {
