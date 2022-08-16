@@ -3,6 +3,7 @@ var dragged
 window.addEventListener('drop', (e) => e.preventDefault())
 
 function initTile() {
+  search.addEventListener('keyup', (e) => refineSearch(e))
   // generate resource list items
   for (let i = 0; i < resourceDictionary.length; i++) {
     // list item
@@ -104,4 +105,16 @@ function move (from, to) {
   }
   // move element
   to.appendChild(from)
+}
+
+function refineSearch(e) {
+  let input = did.Search.value.toUpperCase()
+  let list = document.getElementsByClassName('resource')
+  for (let i = 0; i < list.length; i++) {
+    if (list[i].getAttribute('data-resource-type').split('::')[2].toUpperCase().indexOf(input) > -1) {
+      list[i].style.display = "";
+    } else {
+      list[i].style.display = "none";
+    }
+  }
 }
