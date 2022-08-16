@@ -1,18 +1,9 @@
-var indentValue = '  '
-function idt (num) {
-  let str = ''
-  for (let i = 0; i < num; i++) {
-    str += indentValue
-  }
-  return str
-}
-
 var gen = {}
 
 function generate () {
 
   // version
-  if (template.Version !== 'none') {
+  if (template.Version !== '') {
     gen.AWSTemplateFormatVersion = template.Version
   }
 
@@ -23,32 +14,32 @@ function generate () {
 
   // Metadata
   if (template.Metadata) {
-    gen.Metadata = 'temp'
+    gen.Metadata = {}
   }
 
   // Parameters
   if (template.Parameters) {
-    gen.Parameters = 'temp'
+    gen.Parameters = {}
   }
 
   // Rules
   if (template.Rules) {
-    gen.Rules = 'temp'
+    gen.Rules = {}
   }
 
   // Mappings
   if (template.Mappings) {
-    gen.Mappings = 'temp'
+    gen.Mappings = {}
   }
 
   // Conditions
   if (template.Conditions) {
-    gen.Conditions = 'temp'
+    gen.Conditions = {}
   }
 
   // Transform
   if (template.Transform) {
-    gen.Transform = 'temp'
+    gen.Transform = {}
   }
 
   // Resources
@@ -64,9 +55,9 @@ function generate () {
 
   // Outputs
   if (template.Outputs) {
-    gen.Outputs += 'Outputs: \n'
+    gen.Outputs = {}
   }
 
   // console.log(template.Generated)
-  console.log(JSON.stringify(gen, 'null', 2))
+  console.log(JSON.stringify(gen, null, 2))
 }
