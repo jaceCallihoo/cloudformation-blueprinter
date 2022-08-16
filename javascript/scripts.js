@@ -14,6 +14,7 @@ var did = {
   CtxName: null
 }
 var dragged
+var contexted
 var nextRef = 0
 var template = {
   Version: 'none',
@@ -79,6 +80,10 @@ window.addEventListener('load', () => {
 
     did.Results.appendChild(resource)
   }
+
+  // init contetx menu
+  did.CtxMenu.addEventListener('input', (e) => updateResourceName(e))
+  did.CtxName.addEventListener('focus', (e) => e.target.select())
 })
 
 window.addEventListener('drop', (e) => e.preventDefault())
@@ -142,13 +147,13 @@ function drop (e) {
     icon.setAttribute('data-reference', nextRef)
 
     // set context menu for icon
-    icon.addEventListener('contextmenu', (e) => addContextMenu(e))
+    icon.addEventListener('contextmenu', (e) => showContextMenu(e))
 
     // make icon movable
     icon.addEventListener('dragstart', (e) => moveDrag(e))
 
     // add to template resources
-    template.Resources.push({Ref: nextRef, Name: 'defaultResourceName', Type: dragged.Type, Properties: []})
+    template.Resources.push({Ref: nextRef, Name: '', Type: dragged.Type, Properties: []})
 
     e.target.appendChild(icon)
     nextRef++
@@ -172,14 +177,10 @@ function moveDrag (e) {
   // dragged.From.style.display = 'none'
 }
 
-function addContextMenu (e) {
-  console.log(did.CtxMenu)
-  did.CtxMenu.style.width = `${menuWidth}px` // temp
-  did.CtxMenu.style.height = '100px'         // temp
-  did.CtxName.placeholder = 'Un-named Resource'
-
-  let item = document.createElement('li')
-  item.innerHTML = 'hello'
+function showContextMenu (e) {
+  contexted = e.target
+  let ref = parseInt(contexted.getAttribute('data-reference'))
+  did.CtxName.value = getName(ref)
 
   did.CtxMenu.style.left = e.clientX + 'px'
   did.CtxMenu.style.top = e.clientY + 'px'
@@ -188,13 +189,26 @@ function addContextMenu (e) {
 
 // hide context menu on click away
 document.addEventListener('click', (e) => {
-  if (!e.target.closest('#context-menu')) {
-    did.CtxMenu.style.display = 'none'
+  if (!e.target.closest('#context-menu')) { // if not inside the menu
+    did.CtxMenu.style.display = 'none'      // hide
   }
 })
 
 function moveGrid (e) {
   e.preventDefault()
   var startX = did.Grid.style.top
-  console.log(startX)
+  // console.log(startX)
+}
+
+function updateResourceName (e) {
+  let ref = parseInt(contexted.getAttribute('data-reference'))
+  template.Resources.find(o => {
+    if (o.Ref === ref) {
+      o.Name = did.CtxName.value
+    }
+  })
+}
+
+function getName (ref) {
+  return template.Resources.find(o => o.Ref === ref).Name
 }

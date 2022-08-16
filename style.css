@@ -134,6 +134,8 @@ html, body {
 }
 
 #context-menu {
+  width: 250px;
+
   display: none;
   position: fixed;
   z-index: 10;
