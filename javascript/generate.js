@@ -51,17 +51,35 @@ function generate () {
     if (resource.Properties.length > 0) {
       g.Resources[resource.Name].Properties = {}
       resource.Properties.forEach((property) => {
-        g.Resources[resource.Name].Properties[property.Name] = property.Value 
+        g.Resources[resource.Name].Properties[property.Name] = property.Value
       })
     }
   })
 
-
   // Outputs
   if (template.Outputs) {
     g.Outputs = {}
+    template.Outputs.forEach((output) => {
+      g.Outputs[output.Name] = {}
+
+      if (output.Description !== '') {
+        g.Outputs[output.Name].Description = output.Description
+      }
+
+      g.Outputs[output.Name].Value = {}
+      g.Outputs[output.Name].Value.Ref = template.Outputs[output].Value // maybe needs refactoring
+
+      if (output.Export) {
+        g.Outputs[output.Name].Export = {}
+        g.Outputs[output.Name].Export.Name = output.Export
+      }
+    })
   }
 
   // console.log(template.Generated)
   console.log(JSON.stringify(g, null, 2))
+}
+
+function res () {
+  console.log(template.Resources)
 }

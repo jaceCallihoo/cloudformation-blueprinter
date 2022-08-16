@@ -88,12 +88,7 @@ window.addEventListener('load', () => {
     did.Results.appendChild(resource)
   }
 
-  // init contetx menu
-  did.CtxMenu.addEventListener('input', (e) => updateResourceName(e))
-  did.CtxName.addEventListener('focus', (e) => e.target.select())
-  did.CtxView.addEventListener('click', (e) => {})
-  did.CtxAdd.addEventListener('click', (e) => {})
-  did.CtxDel.addEventListener('click', (e) => {})
+  initContext()
 })
 
 // get number of rows/columns for the grid template attribute

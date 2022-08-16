@@ -1,7 +1,7 @@
 var dragged
 
 window.addEventListener('drop', (e) => e.preventDefault())
-window.addEventListener('contextmenu', (e) => e.preventDefault())
+
 
 function sideDrag (e) {
   // set dragged
@@ -35,7 +35,7 @@ function drop (e) {
     icon.addEventListener('dragstart', (e) => moveDrag(e))
 
     // add to template resources
-    template.Resources.push({Ref: nextRef, Name: '', Type: dragged.Type, Properties: []})
+    template.Resources.push({Ref: nextRef, Name: '', Type: dragged.Type, Properties: [ {Name: 'AvailabilityZone', Value: 'us-east-1a'}, { Name: 'ImageId', Value: 'ami-0ff8a91507f77f867'} ]})
 
     e.target.appendChild(icon)
     nextRef++
