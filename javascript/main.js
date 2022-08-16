@@ -7,6 +7,7 @@ const menuWidth = 250
 const backgroundRepeat = 3
 
 // globals
+var nextRef = 0
 var did = {
   Grid: null,
   Results: null,
@@ -16,9 +17,6 @@ var did = {
   CtxAdd: null,
   CtxDel: null
 }
-var dragged
-var contexted
-var nextRef = 0
 var template = {
   Version: 'none',
   Description: '',
@@ -32,8 +30,8 @@ var template = {
   Outputs: null
 }
 
-template.Version = "2010-09-09"
-template.Description = "This is my special template"
+template.Version = "2010-09-09" // temp
+template.Description = "This is my special template" // temp
 
 // initialization
 window.addEventListener('load', () => {
@@ -98,11 +96,6 @@ window.addEventListener('load', () => {
   did.CtxDel.addEventListener('click', (e) => {})
 })
 
-window.addEventListener('drop', (e) => e.preventDefault())
-window.addEventListener('contextmenu', (e) => e.preventDefault())
-
-// helpers
-
 // get number of rows/columns for the grid template attribute
 function gridTemplateString (num, size) {
   let string = ''
@@ -110,113 +103,4 @@ function gridTemplateString (num, size) {
     string += `${size}px `
   }
   return string
-}
-
-function getTypeIcon (type) {
-  return `images/${type.replace('::', '-').replace('::', '-')}.svg`
-}
-
-function setDragImage (e, type) {
-  var dragImage = document.createElement('img')
-  dragImage.src = getTypeIcon(dragged.Type)
-  e.dataTransfer.setDragImage(dragImage, dragImage.height / 2, dragImage.width / 2)
-}
-
-function move (from, to) {
-  // move all children
-  while (from.childNodes.length > 0) {
-    to.appendChild(from.childNodes[0])
-  }
-  // move element
-  to.appendChild(from)
-}
-
-// event listeners
-
-function sideDrag (e) {
-  // set dragged
-  dragged = {
-    Action: 'create',
-    Type: e.target.getAttribute('data-resource-type')
-  }
-
-  // set drag image
-  setDragImage(e, dragged.Type)
-}
-
-function drop (e) {
-  // check for valid target
-  if (dragged.Action === 'create') {
-    // create icon
-    let icon = document.createElement('img')
-    icon.classList.add('icon')
-    icon.src = getTypeIcon(dragged.Type)
-    icon.width = cellSize * iconSize
-    icon.height = cellSize * iconSize
-    icon.style.right = `${cellSize * Math.floor(iconSize / 2)}px`
-    icon.style.bottom = `${cellSize * Math.floor(iconSize / 2)}px`
-    icon.setAttribute('data-resource-type', dragged.Type)
-    icon.setAttribute('data-reference', nextRef)
-
-    // set context menu for icon
-    icon.addEventListener('contextmenu', (e) => showContextMenu(e))
-
-    // make icon movable
-    icon.addEventListener('dragstart', (e) => moveDrag(e))
-
-    // add to template resources
-    template.Resources.push({Ref: nextRef, Name: '', Type: dragged.Type, Properties: []})
-
-    e.target.appendChild(icon)
-    nextRef++
-  } else if (dragged.Action === 'move') {
-    move(dragged.From, e.target)
-  }
-}
-
-function moveDrag (e) {
-  dragged = {
-    Action: 'move',
-    From: e.target,
-    Type: e.target.getAttribute('data-resource-type')
-  }
-
-  // set drag image
-  setDragImage(e, dragged.Type)
-}
-
-function showContextMenu (e) {
-  contexted = e.target
-  let ref = parseInt(contexted.getAttribute('data-reference'))
-  did.CtxName.value = getName(ref)
-
-  did.CtxMenu.style.left = e.clientX + 'px'
-  did.CtxMenu.style.top = e.clientY + 'px'
-  did.CtxMenu.style.display = 'block'
-}
-
-// hide context menu on click away
-document.addEventListener('click', (e) => {
-  if (!e.target.closest('#context-menu')) { // if not inside the menu
-    did.CtxMenu.style.display = 'none'      // hide
-  }
-})
-
-function moveGrid (e) {
-  e.preventDefault()
-  var startX = did.Grid.style.top
-  // console.log(startX)
-}
-
-function updateResourceName (e) {
-  let ref = parseInt(contexted.getAttribute('data-reference'))
-  template.Resources.find(o => {
-    if (o.Ref === ref) {
-      o.Name = did.CtxName.value
-    }
-  })
-}
-
-function getName (ref) {
-  return template.Resources.find(o => o.Ref === ref).Name
 }

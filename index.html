@@ -4,9 +4,11 @@
 		<meta charset="utf-8">
 		<title>Cloudformation Template Blueprinter</title>
     <link rel="icon" type="image/x-icon" href="images/aws-cloudformation-blue.ico">
+    <script src="javascript/main.js"></script>
+    <script src="javascript/drag.js"></script>
+    <script src="javascript/context.js"></script>
     <script src="javascript/resources.js"></script>
-    <script src="javascript/scripts.js"></script>
-    <script src="javascript/templateGenerator.js"></script>
+    <script src="javascript/generate.js"></script>
 		<link rel="stylesheet" href="style.css">
 	</head>
 	<body>
@@ -21,17 +23,17 @@
     <div id="context-menu">
       <ul>
         <li class="">
-          <input id='context-name' type="text" placeholder="Empty">
+          <input id="context-name" type="text" placeholder="Empty">
         </li>
-        <li>
+        <li id="context-view">
           <span id="icon-view" class="context-icon"></span>
           View Properties
         </li>
-        <li>
+        <li id="context-add">
           <span id="icon-add" class="context-icon"></span>
           Add Property
         </li>
-        <li>
+        <li id="context-delete">
           <span id="icon-delete" class="context-icon"></span>
           Delete
         </li>
