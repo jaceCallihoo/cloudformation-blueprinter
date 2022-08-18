@@ -2,6 +2,7 @@
 var nextRef = 0
 var did = {
   Grid: null,
+  Search: null,
   Results: null,
   CtxMenu: null,
   CtxName: null,
@@ -10,7 +11,7 @@ var did = {
   CtxDel: null
 }
 var template = {
-  Version: 'none',
+  Version: '',
   Description: '',
   Metadata: null,
   Parameters: null,
@@ -29,6 +30,7 @@ template.Description = "This is my special template" // temp
 window.addEventListener('load', () => {
   // constant document objects
   did.Grid = document.getElementById('grid')
+  did.Search = document.getElementById('search')
   did.Results = document.getElementById('search-results')
   did.CtxMenu = document.getElementById('context-menu')
   did.CtxName = document.getElementById('context-name')

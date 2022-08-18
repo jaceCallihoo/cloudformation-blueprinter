@@ -2,7 +2,10 @@ const cellSize = 30
 const iconSize = 5
 const numRows = 40
 const numCols = 80
-const backgroundRepeat = 3
+const backgroundRepeat = 1
+
+var dragStart
+var gridStart
 
 function initGrid() {
   // set grid size
@@ -22,8 +25,10 @@ function initGrid() {
   }
 
   // make grid draggable
-  // did.Grid.setAttribute('draggable', true)
-  // did.Grid.addEventListener('drag', (e) => moveGrid(e))
+  // did.GridView.setAttribute('draggable', true)
+  // did.Grid.addEventListener()
+  // did.GridView.addEventListener('dragstart', (e) => sstx(e))
+  // did.GridView.addEventListener('drag', (e) => moveGrid(e))
 }
 
 
@@ -34,4 +39,17 @@ function gridTemplateString (num, size) {
     string += `${size}px `
   }
   return string
+}
+
+function sstx(e) {
+  dragStart = {x: e.clientX, y: e.clientY}
+  gridStart = {x: did.GridView.style.left, y: did.GridView.style.top}
+}
+
+function moveGrid (e) {
+  console.log('test')
+  e.preventDefault()
+
+  did.GridView.style.top = gridStart.y - (dragStart.y - e.clientY) + 'px'
+  did.GridView.style.left = gridStart.x - (dragStart.x - e.clientX) + 'px'
 }

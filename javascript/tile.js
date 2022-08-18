@@ -42,6 +42,9 @@ function sideDrag (e) {
 
 function drop (e) {
   // check for valid target
+  if (!dragged) {
+    return
+  }
   if (dragged.Action === 'create') {
     // create icon
     let icon = document.createElement('img')
@@ -85,13 +88,6 @@ function setDragImage (e, type) {
   var dragImage = document.createElement('img')
   dragImage.src = getTypeIcon(dragged.Type)
   e.dataTransfer.setDragImage(dragImage, dragImage.height / 2, dragImage.width / 2)
-}
-
-
-function moveGrid (e) {
-  e.preventDefault()
-  var startX = did.Grid.style.top
-  // console.log(startX)
 }
 
 function getTypeIcon (type) {

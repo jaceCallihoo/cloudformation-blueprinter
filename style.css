@@ -74,6 +74,11 @@ html, body {
   border-radius: 20px;       /* roundness of the scroll thumb */
 }
 
+#grid-view {
+  display: relative;
+  background-image: url('images/back2.svg');
+}
+
 #grid {
 	display: grid;
 	/* background-color: black; */
@@ -86,7 +91,7 @@ html, body {
 
 	overflow: hidden;
 
-  background-image: url('images/back.svg');
+  background-image: url('images/back2.svg');
 
 	/* remove user selection (all browsers) */
 	user-select: none;
@@ -163,6 +168,7 @@ html, body {
 
 #context-menu ul li input:focus {
   background-color: inherit;
+  outline: none;
 }
 
 .context-icon {
