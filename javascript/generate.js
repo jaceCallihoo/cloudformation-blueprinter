@@ -13,32 +13,32 @@ function generate () {
   }
 
   // Metadata
-  if (template.Metadata) {
+  if (template.Metadata !== null) {
     g.Metadata = {}
   }
 
   // Parameters
-  if (template.Parameters) {
+  if (template.Parameters !== null) {
     g.Parameters = {}
   }
 
   // Rules
-  if (template.Rules) {
+  if (template.Rules !== null) {
     g.Rules = {}
   }
 
   // Mappings
-  if (template.Mappings) {
+  if (template.Mappings !== null) {
     g.Mappings = {}
   }
 
   // Conditions
-  if (template.Conditions) {
+  if (template.Conditions !== null) {
     g.Conditions = {}
   }
 
   // Transform
-  if (template.Transform) {
+  if (template.Transform !== null) {
     g.Transform = {}
   }
 
@@ -57,7 +57,7 @@ function generate () {
   })
 
   // Outputs
-  if (template.Outputs) {
+  if (template.Outputs !== null) {
     g.Outputs = {}
     template.Outputs.forEach((output) => {
       g.Outputs[output.Name] = {}
