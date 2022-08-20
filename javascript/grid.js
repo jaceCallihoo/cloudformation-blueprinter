@@ -1,5 +1,5 @@
 const cellSize = 30
-const iconSize = 5
+const tileSize = 5
 const numRows = 40
 const numCols = 80
 const backgroundRepeat = 1

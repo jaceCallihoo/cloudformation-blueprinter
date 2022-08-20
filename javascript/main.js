@@ -42,3 +42,24 @@ window.addEventListener('load', () => {
   initTile()
   initContext()
 })
+
+function getName (ref) {
+  return template.Resources.find(o => o.Ref === ref).Name
+}
+
+function getRef (tile) {
+  return parseInt(tile.getAttribute('data-reference'))
+}
+
+function setByRef(ref, member, value) {
+  // TODO: Speed up
+  template.Resources.find(o => {
+    if (o.Ref === ref) {
+      o[member] = value
+    }
+  })
+}
+
+function getTile(ref) {
+  return document.querySelectorAll(`[data-reference="${ref}"]`)[0];
+}

@@ -3,7 +3,7 @@ var contexted
 window.addEventListener('contextmenu', (e) => e.preventDefault())
 
 function initContext() {
-  did.CtxMenu.addEventListener('input', (e) => updateResourceName(e))
+  did.CtxName.addEventListener('input', (e) => tileNameContext(e))
   did.CtxName.addEventListener('focus', (e) => e.target.select())
   did.CtxName.addEventListener('keypress', (e) => contextNameKeypress(e))
   did.CtxView.addEventListener('click', (e) => {})
@@ -12,7 +12,13 @@ function initContext() {
 }
 
 function showContextMenu (e) {
-  contexted = e.target
+
+  // dont show context menu on input
+  if (e.target.tagName === 'INPUT') {
+    return
+  }
+
+  contexted = e.currentTarget
   let ref = getRef(contexted)
   did.CtxName.value = getName(ref)
 
@@ -34,25 +40,19 @@ function deleteTile () {
   template.Resources = template.Resources.filter(o => o.Ref !== getRef(contexted))
 }
 
-function updateResourceName (e) {
+function tileNameContext (e) {
+  // update template name
   let ref = parseInt(contexted.getAttribute('data-reference'))
-  template.Resources.find(o => {
-    if (o.Ref === ref) {
-      o.Name = did.CtxName.value
-    }
-  })
+  setByRef(ref, 'Name', did.CtxName.value)
+
+  // update tile input name
+  let tileInput = getTile(ref).getElementsByTagName('input')[0]
+  tileInput.style.width = e.target.value.length + 2 + "ch";
+  tileInput.value = did.CtxName.value
 }
 
 function contextNameKeypress(e) {
   if (e.key === 'Enter') {
     did.CtxName.blur()
   }
-}
-
-function getName (ref) {
-  return template.Resources.find(o => o.Ref === ref).Name
-}
-
-function getRef (tile) {
-  return parseInt(tile.getAttribute('data-reference'))
 }

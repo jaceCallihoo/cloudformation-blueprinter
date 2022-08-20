@@ -1,3 +1,5 @@
+const tileNameMinWidth = '3ch'
+
 var dragged
 
 window.addEventListener('drop', (e) => e.preventDefault())
@@ -46,27 +48,44 @@ function drop (e) {
     return
   }
   if (dragged.Action === 'create') {
+    // create tile
+    let tile = document.createElement('div')
+    tile.classList.add('tile')
+    tile.style.width = cellSize * tileSize + 'px'
+    tile.style.height = cellSize * tileSize + 'px'
+    tile.style.right = cellSize * Math.floor(tileSize / 2) + 'px'
+    tile.style.bottom = cellSize * Math.floor(tileSize / 2) + 'px'
+    tile.setAttribute('data-resource-type', dragged.Type)
+    tile.setAttribute('data-reference', nextRef)
+    tile.setAttribute('draggable', true)
+
     // create icon
     let icon = document.createElement('img')
-    icon.classList.add('icon')
+    icon.classList.add('tile-image')
     icon.src = getTypeIcon(dragged.Type)
-    icon.width = cellSize * iconSize
-    icon.height = cellSize * iconSize
-    icon.style.right = `${cellSize * Math.floor(iconSize / 2)}px`
-    icon.style.bottom = `${cellSize * Math.floor(iconSize / 2)}px`
-    icon.setAttribute('data-resource-type', dragged.Type)
-    icon.setAttribute('data-reference', nextRef)
+    icon.setAttribute('draggable', false)
+    tile.appendChild(icon)
+
+    // create the name
+    let name = document.createElement('input')
+    name.classList.add('tile-caption')
+    name.style.bottom = '0px'
+    name.style.maxWidth = tile.style.width
+    name.style.minWidth = tileNameMinWidth
+    name.style.width = tileNameMinWidth
+    name.addEventListener('input', tileNameInput)
+    tile.appendChild(name)
 
     // set context menu for icon
-    icon.addEventListener('contextmenu', (e) => showContextMenu(e))
+    tile.addEventListener('contextmenu', (e) => showContextMenu(e))
 
     // make icon movable
-    icon.addEventListener('dragstart', (e) => moveDrag(e))
+    tile.addEventListener('dragstart', (e) => moveDrag(e))
 
     // add to template resources
     template.Resources.push({Ref: nextRef, Name: '', Type: dragged.Type, Properties: [ {Name: 'AvailabilityZone', Value: 'us-east-1a'}, { Name: 'ImageId', Value: 'ami-0ff8a91507f77f867'} ]})
 
-    e.target.appendChild(icon)
+    e.target.appendChild(tile)
     nextRef++
   } else if (dragged.Action === 'move') {
     move(dragged.From, e.target)
@@ -95,11 +114,6 @@ function getTypeIcon (type) {
 }
 
 function move (from, to) {
-  // move all children
-  while (from.childNodes.length > 0) {
-    to.appendChild(from.childNodes[0])
-  }
-  // move element
   to.appendChild(from)
 }
 
@@ -113,4 +127,13 @@ function refineSearch(e) {
       list[i].style.display = "none";
     }
   }
+}
+
+function tileNameInput(e) {
+  // resize input
+  e.target.style.width = e.target.value.length + 2 + "ch";
+
+  // update template name
+  let ref = getRef(e.target.parentElement)
+  setByRef(ref, 'Name', e.target.value)
 }

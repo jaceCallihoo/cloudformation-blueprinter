@@ -1,6 +1,6 @@
 var g = {}  // generated json object
 
-function generate () {
+function generate() {
 
   // version
   if (template.Version !== '') {
